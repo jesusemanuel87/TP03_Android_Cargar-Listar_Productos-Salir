@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.tp03_android_cargar_listar_productos_salir.model.Producto;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -17,6 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.tp03_android_cargar_listar_productos_salir.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
+
+    // ArrayList público y estático para almacenar productos
+    public static ArrayList<Producto> productos = new ArrayList<>();
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
@@ -42,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_cargar, R.id.nav_listar, R.id.nav_salir)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
