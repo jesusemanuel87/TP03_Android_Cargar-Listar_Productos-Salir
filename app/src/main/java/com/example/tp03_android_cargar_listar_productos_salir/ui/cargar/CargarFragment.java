@@ -1,5 +1,6 @@
 package com.example.tp03_android_cargar_listar_productos_salir.ui.cargar;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +22,9 @@ public class CargarFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        cargarViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()).create(CargarViewModel.class);
         binding = FragmentCargarBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        // Inicializar ViewModel
-        cargarViewModel = new ViewModelProvider(this).get(CargarViewModel.class);
 
         // Configurar listeners
         setupListeners();
@@ -49,25 +48,23 @@ public class CargarFragment extends Fragment {
     }
 
     private void observeViewModel() {
-        // Observar mensajes de error
+        // Observar mensajes de error -> siempre mostrar si llega algo
         cargarViewModel.getMensajeError().observe(getViewLifecycleOwner(), mensaje -> {
-            if (mensaje != null && !mensaje.isEmpty()) {
-                Toast.makeText(getContext(), mensaje, Toast.LENGTH_LONG).show();
-            }
+            new AlertDialog.Builder(getContext())
+                    .setTitle("ERROR")
+                    .setMessage(mensaje)
+                    .setNeutralButton("OK", (dialog, which) -> { })
+                    .show();
         });
 
-        // Observar mensajes de éxito
+        // Observar mensajes de éxito -> siempre mostrar si llega algo
         cargarViewModel.getMensajeExito().observe(getViewLifecycleOwner(), mensaje -> {
-            if (mensaje != null && !mensaje.isEmpty()) {
-                Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
         });
 
         // Observar evento de limpiar formulario
         cargarViewModel.getLimpiarFormulario().observe(getViewLifecycleOwner(), limpiar -> {
-            if (limpiar != null && limpiar) {
-                limpiarFormulario();
-            }
+            limpiarFormulario();
         });
     }
 

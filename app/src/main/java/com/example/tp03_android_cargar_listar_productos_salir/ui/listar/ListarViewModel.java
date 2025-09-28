@@ -1,5 +1,9 @@
 package com.example.tp03_android_cargar_listar_productos_salir.ui.listar;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -7,21 +11,26 @@ import androidx.lifecycle.ViewModel;
 import com.example.tp03_android_cargar_listar_productos_salir.model.Producto;
 import com.example.tp03_android_cargar_listar_productos_salir.repository.ProductoRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ListarViewModel extends ViewModel {
+public class ListarViewModel extends AndroidViewModel {
 
     private ProductoRepository repository;
-    private MutableLiveData<List<Producto>> productos = new MutableLiveData<>();
-    private MutableLiveData<String> mensajeVacio = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Producto>> mProductos;
+    private MutableLiveData<String> mensajeVacio;
 
-    public ListarViewModel() {
-        repository = ProductoRepository.getInstance();
-        cargarProductos();
+    public ListarViewModel(@NonNull Application application) {
+        super(application);
     }
 
-    public LiveData<List<Producto>> getProductos() {
-        return productos;
+
+    public LiveData<ArrayList<Producto>> getProductos() {
+        if (mProductos == null) {
+            mProductos = new MutableLiveData<>();
+            cargarProductos();
+        }
+        return mProductos;
     }
 
     public LiveData<String> getMensajeVacio() {
@@ -29,14 +38,16 @@ public class ListarViewModel extends ViewModel {
     }
 
     public void cargarProductos() {
+        repository = ProductoRepository.getInstance();
+
         List<Producto> listaProductos = repository.getAllProductos();
         
         if (listaProductos.isEmpty()) {
             mensajeVacio.setValue("No hay productos cargados");
-            productos.setValue(null);
+            mProductos.setValue(null);
         } else {
             mensajeVacio.setValue(null);
-            productos.setValue(listaProductos);
+            mProductos.setValue((ArrayList<Producto>) listaProductos);
         }
     }
 
