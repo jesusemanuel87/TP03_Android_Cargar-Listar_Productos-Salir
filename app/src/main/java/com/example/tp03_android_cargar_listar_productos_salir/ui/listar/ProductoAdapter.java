@@ -1,5 +1,6 @@
 package com.example.tp03_android_cargar_listar_productos_salir.ui.listar;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +14,24 @@ import com.example.tp03_android_cargar_listar_productos_salir.model.Producto;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ProductoViewHolder> {
 
-    private List<Producto> productos = new ArrayList<>();
+    private ArrayList<Producto> productos;
+    private LayoutInflater inflater;
+    private Context context;
     private DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+
+    public ProductoAdapter(ArrayList<Producto> productos, LayoutInflater inflater, Context context) {
+        this.productos = productos != null ? productos : new ArrayList<>();
+        this.inflater = inflater;
+        this.context = context;
+    }
 
     @NonNull
     @Override
     public ProductoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_producto, parent, false);
+        View view = inflater.inflate(R.layout.item_producto, parent, false);
         return new ProductoViewHolder(view);
     }
 
@@ -37,11 +44,6 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.Produc
     @Override
     public int getItemCount() {
         return productos.size();
-    }
-
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos != null ? productos : new ArrayList<>();
-        notifyDataSetChanged();
     }
 
     class ProductoViewHolder extends RecyclerView.ViewHolder {
