@@ -65,7 +65,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@android:color/lighter_gray"
+                    android:background="#E0E0E0"
                     android:layout_marginBottom="16dp" />
 
                 <!-- Descripción del Producto -->
@@ -101,7 +101,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@android:color/lighter_gray"
+                    android:background="#E0E0E0"
                     android:layout_marginBottom="16dp" />
 
                 <!-- Precio del Producto -->
