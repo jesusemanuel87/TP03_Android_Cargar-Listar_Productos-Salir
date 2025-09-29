@@ -18,6 +18,12 @@
         tools:layout="@layout/fragment_listar" />
 
     <fragment
+        android:id="@+id/nav_maps"
+        android:name="com.example.tp03_android_cargar_listar_productos_salir.ui.maps.MapsFragment"
+        android:label="Mi Ubicación"
+        tools:layout="@layout/fragment_maps" />
+
+    <fragment
         android:id="@+id/nav_salir"
         android:name="com.example.tp03_android_cargar_listar_productos_salir.ui.salir.SalirFragment"
         android:label="Salir"
