@@ -26,10 +26,8 @@ public class CargarFragment extends Fragment {
         binding = FragmentCargarBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // Configurar listeners
         setupListeners();
 
-        // Observar LiveData
         observeViewModel();
 
         return root;
@@ -48,7 +46,6 @@ public class CargarFragment extends Fragment {
     }
 
     private void observeViewModel() {
-        // Observar mensajes de error -> siempre mostrar si llega algo
         cargarViewModel.getMensajeError().observe(getViewLifecycleOwner(), mensaje -> {
             new AlertDialog.Builder(getContext())
                     .setTitle("ERROR")
@@ -57,12 +54,10 @@ public class CargarFragment extends Fragment {
                     .show();
         });
 
-        // Observar mensajes de éxito -> siempre mostrar si llega algo
         cargarViewModel.getMensajeExito().observe(getViewLifecycleOwner(), mensaje -> {
             Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
         });
 
-        // Observar evento de limpiar formulario
         cargarViewModel.getLimpiarFormulario().observe(getViewLifecycleOwner(), limpiar -> {
             limpiarFormulario();
         });

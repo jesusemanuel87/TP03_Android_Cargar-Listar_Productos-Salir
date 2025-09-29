@@ -26,26 +26,18 @@ public class BusquedaFragment extends Fragment {
         binding = FragmentBusquedaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // Observar mensajes de error o información
         mv.getmMensaje().observe(getViewLifecycleOwner(), mensaje -> {
-            if (mensaje != null && !mensaje.isEmpty()) {
-                Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(getContext(), mensaje, Toast.LENGTH_SHORT).show();
         });
 
-        // Observar cuando se encuentra un producto
         mv.getmProducto().observe(getViewLifecycleOwner(), producto -> {
-            if (producto != null) {
-                // Navegar al fragment de detalle pasando campos individuales
-                Bundle bundle = new Bundle();
-                bundle.putString("codigo", producto.getCodigo());
-                bundle.putString("descripcion", producto.getDescripcion());
-                bundle.putDouble("precio", producto.getPrecio());
-                Navigation.findNavController(root).navigate(R.id.action_busqueda_to_detalle, bundle);
-            }
+            Bundle bundle = new Bundle();
+            bundle.putString("codigo", producto.getCodigo());
+            bundle.putString("descripcion", producto.getDescripcion());
+            bundle.putDouble("precio", producto.getPrecio());
+            Navigation.findNavController(root).navigate(R.id.action_busqueda_to_detalle, bundle);
         });
 
-        // Listener del botón buscar
         binding.btnBuscar.setOnClickListener(v -> {
             String codigo = binding.etCodigoBuscar.getText().toString();
             mv.buscarProducto(codigo);

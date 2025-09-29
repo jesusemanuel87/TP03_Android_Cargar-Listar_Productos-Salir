@@ -40,19 +40,13 @@ public class BusquedaViewModel extends AndroidViewModel {
             return;
         }
 
-        // Buscar el producto por código
-        Producto productoEncontrado = null;
         for (Producto producto : productos) {
             if (producto.getCodigo().equalsIgnoreCase(codigoBuscado.trim())) {
-                productoEncontrado = producto;
-                break;
+                mProducto.setValue(producto);
+                return;
             }
         }
 
-        if (productoEncontrado != null) {
-            mProducto.setValue(productoEncontrado);
-        } else {
-            mMensaje.setValue("No se encontró un producto con el código: " + codigoBuscado);
-        }
+        mMensaje.setValue("No se encontró un producto con el código: " + codigoBuscado);
     }
 }

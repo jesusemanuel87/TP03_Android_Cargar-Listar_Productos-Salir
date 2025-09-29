@@ -27,29 +27,22 @@ public class DetalleFragment extends Fragment {
         binding = FragmentDetalleBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // Observar el producto
         mv.getmProducto().observe(getViewLifecycleOwner(), producto -> {
-            if (producto != null) {
-                binding.tvDetalleCodigo.setText(producto.getCodigo());
-                binding.tvDetalleDescripcion.setText(producto.getDescripcion());
-                binding.tvDetallePrecio.setText("$ " + decimalFormat.format(producto.getPrecio()));
-            }
+            binding.tvDetalleCodigo.setText(producto.getCodigo());
+            binding.tvDetalleDescripcion.setText(producto.getDescripcion());
+            binding.tvDetallePrecio.setText("$ " + decimalFormat.format(producto.getPrecio()));
         });
 
-        // Listener del botón volver
         binding.btnVolver.setOnClickListener(v -> {
             Navigation.findNavController(root).navigateUp();
         });
 
-        // Cargar el producto desde los argumentos
-        if (getArguments() != null) {
-            String codigo = getArguments().getString("codigo");
-            String descripcion = getArguments().getString("descripcion");
-            double precio = getArguments().getDouble("precio");
-            
-            Producto producto = new Producto(codigo, descripcion, precio);
-            mv.cargarProducto(producto);
-        }
+        String codigo = getArguments().getString("codigo");
+        String descripcion = getArguments().getString("descripcion");
+        double precio = getArguments().getDouble("precio");
+        
+        Producto producto = new Producto(codigo, descripcion, precio);
+        mv.cargarProducto(producto);
 
         return root;
     }
