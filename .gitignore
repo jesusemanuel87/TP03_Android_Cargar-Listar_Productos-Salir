@@ -13,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Archivos de documentación interna (no subir a repositorio público)
+GUION_VIDEO.md
