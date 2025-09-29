@@ -19,6 +19,23 @@ Aplicación Android que implementa un sistema de gestión de productos utilizand
   - Precio alineado a la derecha
 - Actualización automática de la lista
 
+### 🔹 Búsqueda de Productos
+- **Búsqueda por código** de producto
+- Validación de campo de búsqueda
+- **Navegación automática** al detalle cuando encuentra el producto
+- Mensajes informativos para productos no encontrados
+
+### 🔹 Detalle del Producto
+- **Visualización completa** del producto encontrado
+- Diseño elegante con separadores y formato profesional
+- **Precio formateado** con separadores de miles
+- Navegación de regreso a búsqueda
+
+### 🔹 Mapa
+- **Visualización de ubicación** del usuario
+- Integración con Google Maps
+- Funcionalidad de geolocalización
+
 ### 🔹 Salir
 - Diálogo de confirmación para cerrar la aplicación
 - Opción segura de salida
@@ -54,6 +71,14 @@ app/src/main/java/.../
     │   ├── ListarFragment.java   # Fragment para mostrar lista
     │   ├── ListarViewModel.java  # ViewModel para lógica de lista
     │   └── ProductoAdapter.java  # Adapter para RecyclerView
+    ├── busqueda/
+    │   ├── BusquedaFragment.java # Fragment para buscar productos
+    │   └── BusquedaViewModel.java# ViewModel para lógica de búsqueda
+    ├── detalle/
+    │   ├── DetalleFragment.java  # Fragment para mostrar detalle
+    │   └── DetalleViewModel.java # ViewModel para lógica de detalle
+    ├── maps/
+    │   └── MapsFragment.java     # Fragment para mostrar mapa
     └── salir/
         ├── SalirFragment.java    # Fragment para salir
         └── SalirViewModel.java   # ViewModel para lógica de salida
@@ -63,8 +88,17 @@ app/src/main/res/
 │   ├── activity_main.xml         # Layout principal con Navigation Drawer
 │   ├── fragment_cargar.xml       # Layout del formulario de carga
 │   ├── fragment_listar.xml       # Layout de la lista de productos
+│   ├── fragment_busqueda.xml     # Layout del formulario de búsqueda
+│   ├── fragment_detalle.xml      # Layout del detalle del producto
+│   ├── fragment_maps.xml         # Layout del mapa
 │   ├── fragment_salir.xml        # Layout de confirmación de salida
 │   └── item_producto.xml         # Layout del item de producto
+├── drawable/
+│   ├── ic_cargar_producto.png    # Ícono para cargar productos
+│   ├── ic_listar.png             # Ícono para listar productos
+│   ├── ic_buscar.png             # Ícono para búsqueda
+│   ├── ic_maps.png               # Ícono para mapa
+│   └── ic_salir.png              # Ícono para salir
 ├── menu/
 │   └── activity_main_drawer.xml  # Menú del Navigation Drawer
 └── navigation/
@@ -106,17 +140,21 @@ app/src/main/res/
    - Click en "Run" o presionar Shift + F10
 
 4. **Usar la aplicación**
-   - **Cargar**: Agregar nuevos productos
+   - **Cargar**: Agregar nuevos productos con validaciones
    - **Listar**: Ver productos ordenados alfabéticamente
+   - **Búsqueda**: Buscar productos por código y ver detalle
+   - **Mapa**: Ver ubicación actual del usuario
    - **Salir**: Cerrar la aplicación con confirmación
 
 ## 📱 Capturas de Pantalla
 
 La aplicación cuenta con una interfaz intuitiva que incluye:
-- Navigation Drawer para navegación fácil
-- Formularios con validación en tiempo real
-- Lista de productos con diseño de tarjetas
-- Diálogos de confirmación
+- **Navigation Drawer** con 5 opciones principales
+- **Formularios** con validación en tiempo real
+- **Lista de productos** con diseño de tarjetas y ordenamiento
+- **Búsqueda y detalle** con navegación fluida
+- **Integración de mapas** para geolocalización
+- **Diálogos de confirmación** para acciones críticas
 
 ## 🔧 Requisitos del Sistema
 
