@@ -31,6 +31,10 @@ public class MapsViewModel extends AndroidViewModel {
     private MutableLiveData<Location> mLocation;
     private MutableLiveData<MapaActual> mMapa;
     private MutableLiveData<String> mensajeError;
+    private MutableLiveData<Boolean> ocultarError;
+    private MutableLiveData<Boolean> solicitarPermisos;
+    private MutableLiveData<String> mensajeToast;
+    private static final int PERMISSION_REQUEST_CODE = 1000;
 
     public MapsViewModel(@NonNull Application application) {
         super(application);
@@ -59,17 +63,61 @@ public class MapsViewModel extends AndroidViewModel {
         return mensajeError;
     }
 
+    public LiveData<Boolean> getOcultarError() {
+        if (ocultarError == null) {
+            ocultarError = new MutableLiveData<>();
+        }
+        return ocultarError;
+    }
+
+    public LiveData<Boolean> getSolicitarPermisos() {
+        if (solicitarPermisos == null) {
+            solicitarPermisos = new MutableLiveData<>();
+        }
+        return solicitarPermisos;
+    }
+
+    public LiveData<String> getMensajeToast() {
+        if (mensajeToast == null) {
+            mensajeToast = new MutableLiveData<>();
+        }
+        return mensajeToast;
+    }
+
     public void cargarMapa(Location ubicacion) {
         MapaActual mapaActual = new MapaActual(ubicacion);
         mMapa.setValue(mapaActual);
-        // Limpiar mensaje de error si existe
-        mensajeError.setValue("");
+        // Ocultar mensaje de error si existe
+        ocultarError.setValue(true);
+    }
+
+    public void verificarPermisos() {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            // Emitir evento para solicitar permisos
+            solicitarPermisos.setValue(true);
+        } else {
+            // Permisos disponibles, obtener ubicación
+            obtenerUbicacion();
+        }
+    }
+
+    public void onPermisosResultado(int requestCode, int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                obtenerUbicacion();
+            } else {
+                mensajeError.setValue("Se requieren permisos de ubicación para mostrar el mapa");
+                mensajeToast.setValue("Permiso de ubicación denegado. No se puede mostrar el mapa.");
+            }
+        }
     }
 
     public void obtenerUbicacion() {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED 
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            
+
             mensajeError.setValue("Se requieren permisos de ubicación para mostrar el mapa");
             return;
         }
@@ -116,7 +164,7 @@ public class MapsViewModel extends AndroidViewModel {
                     .bearing(45)
                     .tilt(15)
                     .build();
-            
+
             CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cam);
             googleMap.animateCamera(cameraUpdate);
 

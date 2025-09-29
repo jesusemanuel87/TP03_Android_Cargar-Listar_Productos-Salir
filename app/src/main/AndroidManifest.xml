@@ -5,6 +5,7 @@
     <!-- Location permissions for Maps -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -16,6 +17,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TP03_Android_CargarListar_ProductosSalir">
+
+        <!-- Google Maps API Key -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAutAZGhPMGbVEYecChy2efQ0t88U4rF-c" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
